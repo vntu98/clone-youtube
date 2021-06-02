@@ -47,6 +47,6 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        return 'login - successfull';
+        // return 'login - successfull';
     }
 }
