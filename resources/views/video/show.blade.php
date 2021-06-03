@@ -4,13 +4,38 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">Video player</div>
 
+            @if ($video->isPrivate() && Auth::check() && $video->ownedByUser(Auth::user()))
+                <div class="alert alert-info">
+                    Your video is currently private. Only you can see it
+                </div>
+            @endif
+
+            @if ($video->isProcessed() && $video->canBeAccessed(Auth::user()))
+                <video-player video-uid="{{ $video->uid }}" video-url="{{ $video->getStreamUrl() }}" thumbnail-url="{{ $video->thumbnail }}"></video-player>
+            @endif
+
+            @if (!$video->isProcessed())
+                <div class="video-placeholder">
+                    <div class="video-laceholder__header">
+                        The video is processing. Come back a bit later
+                    </div>
+                </div>
+            @elseif (!$video->canBeAccessed(Auth::user()))
+                <div class="video-placeholder">
+                    <div class="video-laceholder__header">
+                        The video is private
+                    </div>
+                </div>
+            @endif
+
+            <div class="card">
                 <div class="card-body">
                     <h4>{{ $video->title }}</h4>
                     <div class="pull-right">
-                        Video views
+                        <div class="video__views">
+                            {{ $video->viewCount() }} {{ str_plural('view', $video->viewCount()) }}
+                        </div>
                     </div>
 
                     <div class="media">

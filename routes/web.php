@@ -10,7 +10,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/videos/{video}', 'VideoController@show');
+
+Route::post('/videos/{video}/views', 'VideoViewController@create');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('channels/{channel}/edit', 'ChannelSettingsController@edit');

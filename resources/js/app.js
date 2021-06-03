@@ -22,9 +22,14 @@ var VueResource = require('vue-resource')
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('video-upload', require('./components/VideoUpload.vue').default);
+Vue.component('video-player', require('./components/VideoPlayer.vue').default);
 
 Vue.use(VueResource)
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
+
+import VueCoreVideoPlayer from 'vue-core-video-player'
+
+Vue.use(VueCoreVideoPlayer)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
