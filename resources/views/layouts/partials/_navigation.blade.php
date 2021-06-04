@@ -9,8 +9,17 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
+            <form action="/search" method="get" class="navbar-form navbar-left">
+                <div style="display: flex;">
+                    <div style="margin-right: 5px; margin-bottom: 0" class="form-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search" value="{{ Request::get('q') }}">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
 
+            <ul class="nav navbar-nav">
+                &nbsp;
             </ul>
 
             <!-- Right Side Of Navbar -->

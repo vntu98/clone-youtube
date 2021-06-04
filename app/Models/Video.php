@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\VideoView;
+use App\Traits\Orderable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Query\Builder;
 
 class Video extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Orderable;
     
     protected $guarded = [];
 
@@ -21,11 +21,6 @@ class Video extends Model
     public function getRouteKeyName()
     {
         return 'uid';
-    }
-
-    public function scopeLatestFirst($builder)
-    {
-        return $builder->latest();
     }
 
     public function isProcessed()
@@ -93,5 +88,32 @@ class Video extends Model
     public function viewCount()
     {
         return $this->views->count();
+    }
+
+    public function scopeSearch($query, $term)
+    {
+        $term = '%' . $term . '%';
+
+        return $query->where('title', 'like', $term);
+    }
+
+    public function votes()
+    {
+        return $this->morphMany(Vote::class, 'voteable');
+    }
+
+    public function upVotes()
+    {
+        return $this->votes->where('type', 'up');
+    }
+
+    public function downVotes()
+    {
+        return $this->votes->where('type', 'down');
+    }
+
+    public function voteFromUser($user)
+    {
+        return $this->votes()->where('user_id', $user->id);
     }
 }

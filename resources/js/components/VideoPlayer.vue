@@ -41,7 +41,6 @@ export default {
             this.$http.post('/videos/' + this.videoUid + '/views')
         },
         loaded() {
-            console.log(this.$refs.player)
             this.duration = Math.floor(this.$refs.player.duration)
 
             setInterval(() => {

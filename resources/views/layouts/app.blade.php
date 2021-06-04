@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -47,6 +48,22 @@
         .video__views {
             font-size: 18px;
             margin-bottom: 10px;
+        }
+
+        .video__voting {
+            font-size: 14px;
+        }
+
+        .video__voting-button {
+            color: #636b6f;
+        }
+
+        .video__voting-button:hover {
+            text-decoration: none;
+        }
+
+        .video__voting-button--voted {
+            color: #3097D1;
         }
     </style>
 </head>

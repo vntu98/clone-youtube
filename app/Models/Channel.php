@@ -32,4 +32,11 @@ class Channel extends Model
 
         return config('codetube.buckets.images') . '/profile/' . $this->image_filename;
     }
+
+    public function scopeSearch($query, $term)
+    {
+        $term = '%' . $term . '%';
+
+        return $query->where('name', 'like', $term);
+    }
 }
