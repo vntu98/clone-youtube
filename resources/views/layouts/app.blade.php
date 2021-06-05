@@ -23,7 +23,7 @@
         window.codetube = {
             url: '{{ config('app.url') }}',
             user: {
-                id: {{ Auth::check() ? Auth::user()->id : 1 }},
+                id: {{ Auth::check() ? Auth::user()->id : 'null' }},
                 authenticated: {{ Auth::check() ? 'true' : 'false' }}
             }
         }
@@ -64,6 +64,14 @@
 
         .video__voting-button--voted {
             color: #3097D1;
+        }
+
+        .video-comment {
+            margin-bottom: 10px;
+        }
+
+        .video-comment__input {
+            margin: 10px 0;
         }
     </style>
 </head>

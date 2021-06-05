@@ -64,7 +64,7 @@
             <div style="margin-top: 10px" class="card">
                 <div class="card-body">
                     @if ($video->commentsAllowed())
-                        Comments
+                        <video-comments video-uid={{ $video->uid }}></video-comments>
                     @endif
                 </div>
             </div>

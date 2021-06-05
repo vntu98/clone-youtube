@@ -116,4 +116,9 @@ class Video extends Model
     {
         return $this->votes()->where('user_id', $user->id);
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable')->whereNull('reply_id');
+    }
 }

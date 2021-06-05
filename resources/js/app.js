@@ -24,6 +24,7 @@ var VueResource = require('vue-resource')
 Vue.component('video-upload', require('./components/VideoUpload.vue').default);
 Vue.component('video-player', require('./components/VideoPlayer.vue').default);
 Vue.component('video-voting', require('./components/VideoVoting.vue').default);
+Vue.component('video-comments', require('./components/VideoComments.vue').default);
 
 Vue.use(VueResource)
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;

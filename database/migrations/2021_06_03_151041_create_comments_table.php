@@ -18,7 +18,7 @@ class CreateCommentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('reply_id')->nullable();
             $table->unsignedBigInteger('commentable_id');
-            $table->unsignedBigInteger('commentable_type');
+            $table->string('commentable_type');
             $table->text('body');
             $table->softDeletes();
             $table->timestamps();
