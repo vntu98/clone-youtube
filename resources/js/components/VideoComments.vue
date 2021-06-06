@@ -11,7 +11,7 @@
         </div>
 
         <ul style="padding-left: 0" class="media-list">
-            <li class="media" v-for="comment in comments" :key="comment.id">
+            <li style="margin-bottom: 15px;" class="media" v-for="comment in comments" :key="comment.id">
                 <div class="media-left">
                     <a :href="'/channel/' + comment.channel.data.slug">
                         <img width="40" height="40" style="margin-right: 5px" :src="comment.channel.data.image" :alt="`${comment.channel.data.name} image`" class="media-object">
@@ -19,11 +19,14 @@
                 </div>
                 <div class="media-body">
                     <a :href="'/channel/' + comment.channel.data.slug">{{ comment.channel.data.name }}</a> {{ comment.created_at_human }}
-                    <p>{{ comment.body }}</p>
+                    <p style="margin-bottom: 0;">{{ comment.body }}</p>
 
                     <ul class="list-inline">
-                        <li v-if="$root.user.authenticated">
+                        <li style="display: inline-block; margin-right: 5px;" v-if="$root.user.authenticated">
                             <a href="" @click.prevent="toggleReplyForm(comment.id)">{{ replyFormVisible === comment.id ? 'Cancel' : 'Reply' }}</a>
+                        </li>
+                        <li style="display: inline-block;">
+                            <a href="" v-if="$root.user.id === comment.user_id" @click.prevent="deleteComment(comment.id)">Delete</a>
                         </li>
                     </ul>
                     
@@ -34,7 +37,7 @@
                         </div>
                     </div>
 
-                    <div class="media" v-for="reply in comment.replies.data" :key="reply.id">
+                    <div style="margin-bottom: 15px;" class="media" v-for="reply in comment.replies.data" :key="reply.id">
                         <div class="media-left">
                             <a :href="'/channel/' + reply.channel.data.slug">
                                 <img width="40" height="40" style="margin-right: 5px" :src="reply.channel.data.image" :alt="`${reply.channel.data.name} image`" class="media-object">
@@ -42,7 +45,13 @@
                         </div>
                         <div class="media-body">
                             <a :href="'/channel/' + reply.channel.data.slug">{{ reply.channel.data.name }}</a> {{ reply.created_at_human }}
-                            <p>{{ reply.body }}</p>
+                            <p style="margin-bottom: 0;">{{ reply.body }}</p>
+
+                            <ul class="list-inline">
+                                <li>
+                                    <a href="" v-if="$root.user.id === reply.user_id" @click.prevent="deleteComment(reply.id)">Delete</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -98,6 +107,28 @@ export default {
                 // this.comments.unshift(comment)
                 this.getComments()
                 this.body = null
+            })
+        },
+        deleteComment(commentId) {
+            if (!confirm('Are you sure you want to delete this comment?')) {
+                return
+            }
+
+            this.deleteById(commentId)
+            this.$http.delete('/videos/' + this.videoUid + '/comments/' + commentId)
+        },
+        deleteById(commentId) {
+            this.comments.map((comment, index) => {
+                if (comment.id === commentId) {
+                    this.comments.splice(index, 1);
+                }
+
+                comment.replies.data.map((reply, replyIndex) => {
+                    if (reply.id === commentId) {
+                        this.comments[index].replies.data.splice(replyIndex, 1)
+                        return
+                    }
+                })
             })
         }
     },

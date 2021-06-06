@@ -16145,6 +16145,71 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    channelSlug: null
+  },
+  data: function data() {
+    return {
+      subcribers: null,
+      userSubcribed: false,
+      canSubcribe: false
+    };
+  },
+  methods: {
+    getSubcriptionStatus: function getSubcriptionStatus() {
+      var _this = this;
+
+      this.$http.get('/subcription/' + this.channelSlug).then(function (response) {
+        _this.subcribers = response.data.count;
+        _this.userSubcribed = response.data.user_subcribed;
+        _this.canSubcribe = response.data.can_subcribe;
+      });
+    },
+    maybePluralize: function maybePluralize(count, noun) {
+      var suffix = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 's';
+      return "".concat(noun).concat(count !== 1 ? suffix : '');
+    },
+    handle: function handle() {
+      if (this.userSubcribed) {
+        this.unsubcribe();
+      } else {
+        this.subcribe();
+      }
+    },
+    unsubcribe: function unsubcribe() {
+      this.userSubcribed = false;
+      this.subcribers--;
+      this.$http["delete"]('/subcriptions/' + this.channelSlug);
+    },
+    subcribe: function subcribe() {
+      this.userSubcribed = true;
+      this.subcribers++;
+      this.$http.post('/subcriptions/' + this.channelSlug);
+    }
+  },
+  created: function created() {
+    this.getSubcriptionStatus();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoComments.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VideoComments.vue?vue&type=script&lang=js& ***!
@@ -16154,6 +16219,15 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16264,6 +16338,31 @@ __webpack_require__.r(__webpack_exports__);
         _this3.getComments();
 
         _this3.body = null;
+      });
+    },
+    deleteComment: function deleteComment(commentId) {
+      if (!confirm('Are you sure you want to delete this comment?')) {
+        return;
+      }
+
+      this.deleteById(commentId);
+      this.$http["delete"]('/videos/' + this.videoUid + '/comments/' + commentId);
+    },
+    deleteById: function deleteById(commentId) {
+      var _this4 = this;
+
+      this.comments.map(function (comment, index) {
+        if (comment.id === commentId) {
+          _this4.comments.splice(index, 1);
+        }
+
+        comment.replies.data.map(function (reply, replyIndex) {
+          if (reply.id === commentId) {
+            _this4.comments[index].replies.data.splice(replyIndex, 1);
+
+            return;
+          }
+        });
       });
     }
   }
@@ -73666,6 +73765,56 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.subcribers !== null
+    ? _c("div", [
+        _vm._v(
+          "\n    " +
+            _vm._s(_vm.subcribers) +
+            " " +
+            _vm._s(_vm.maybePluralize(_vm.subcribers, "subcriber")) +
+            "  \n    "
+        ),
+        _vm.canSubcribe
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-default",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.handle($event)
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.userSubcribed ? "Unsubcribe" : "Subcribe"))]
+            )
+          : _vm._e()
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/VideoComments.vue?vue&type=template&id=7f1367b4&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/VideoComments.vue?vue&type=template&id=7f1367b4& ***!
@@ -73732,153 +73881,224 @@ var render = function() {
       "ul",
       { staticClass: "media-list", staticStyle: { "padding-left": "0" } },
       _vm._l(_vm.comments, function(comment) {
-        return _c("li", { key: comment.id, staticClass: "media" }, [
-          _c("div", { staticClass: "media-left" }, [
-            _c(
-              "a",
-              { attrs: { href: "/channel/" + comment.channel.data.slug } },
-              [
-                _c("img", {
-                  staticClass: "media-object",
-                  staticStyle: { "margin-right": "5px" },
-                  attrs: {
-                    width: "40",
-                    height: "40",
-                    src: comment.channel.data.image,
-                    alt: comment.channel.data.name + " image"
-                  }
-                })
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "media-body" },
-            [
+        return _c(
+          "li",
+          {
+            key: comment.id,
+            staticClass: "media",
+            staticStyle: { "margin-bottom": "15px" }
+          },
+          [
+            _c("div", { staticClass: "media-left" }, [
               _c(
                 "a",
                 { attrs: { href: "/channel/" + comment.channel.data.slug } },
-                [_vm._v(_vm._s(comment.channel.data.name))]
-              ),
-              _vm._v(
-                " " + _vm._s(comment.created_at_human) + "\n                "
-              ),
-              _c("p", [_vm._v(_vm._s(comment.body))]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "list-inline" }, [
-                _vm.$root.user.authenticated
-                  ? _c("li", [
-                      _c(
-                        "a",
+                [
+                  _c("img", {
+                    staticClass: "media-object",
+                    staticStyle: { "margin-right": "5px" },
+                    attrs: {
+                      width: "40",
+                      height: "40",
+                      src: comment.channel.data.image,
+                      alt: comment.channel.data.name + " image"
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "media-body" },
+              [
+                _c(
+                  "a",
+                  { attrs: { href: "/channel/" + comment.channel.data.slug } },
+                  [_vm._v(_vm._s(comment.channel.data.name))]
+                ),
+                _vm._v(
+                  " " + _vm._s(comment.created_at_human) + "\n                "
+                ),
+                _c("p", { staticStyle: { "margin-bottom": "0" } }, [
+                  _vm._v(_vm._s(comment.body))
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "list-inline" }, [
+                  _vm.$root.user.authenticated
+                    ? _c(
+                        "li",
                         {
-                          attrs: { href: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.toggleReplyForm(comment.id)
-                            }
+                          staticStyle: {
+                            display: "inline-block",
+                            "margin-right": "5px"
                           }
                         },
                         [
-                          _vm._v(
-                            _vm._s(
-                              _vm.replyFormVisible === comment.id
-                                ? "Cancel"
-                                : "Reply"
-                            )
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.toggleReplyForm(comment.id)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.replyFormVisible === comment.id
+                                    ? "Cancel"
+                                    : "Reply"
+                                )
+                              )
+                            ]
                           )
                         ]
                       )
-                    ])
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _vm.replyFormVisible === comment.id
-                ? _c("div", { staticClass: "video-comment clear" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.replyBody,
-                          expression: "replyBody"
-                        }
-                      ],
-                      staticClass: "form-control video-comment__input",
-                      domProps: { value: _vm.replyBody },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.replyBody = $event.target.value
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pull-right" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-default",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.createReply(comment.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Reply")]
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._l(comment.replies.data, function(reply) {
-                return _c("div", { key: reply.id, staticClass: "media" }, [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "/channel/" + reply.channel.data.slug }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "media-object",
-                          staticStyle: { "margin-right": "5px" },
-                          attrs: {
-                            width: "40",
-                            height: "40",
-                            src: reply.channel.data.image,
-                            alt: reply.channel.data.name + " image"
-                          }
-                        })
-                      ]
-                    )
-                  ]),
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("div", { staticClass: "media-body" }, [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "/channel/" + reply.channel.data.slug }
-                      },
-                      [_vm._v(_vm._s(reply.channel.data.name))]
-                    ),
-                    _vm._v(
-                      " " +
-                        _vm._s(reply.created_at_human) +
-                        "\n                        "
-                    ),
-                    _c("p", [_vm._v(_vm._s(reply.body))])
+                  _c("li", { staticStyle: { display: "inline-block" } }, [
+                    _vm.$root.user.id === comment.user_id
+                      ? _c(
+                          "a",
+                          {
+                            attrs: { href: "" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.deleteComment(comment.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      : _vm._e()
                   ])
-                ])
-              })
-            ],
-            2
-          )
-        ])
+                ]),
+                _vm._v(" "),
+                _vm.replyFormVisible === comment.id
+                  ? _c("div", { staticClass: "video-comment clear" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.replyBody,
+                            expression: "replyBody"
+                          }
+                        ],
+                        staticClass: "form-control video-comment__input",
+                        domProps: { value: _vm.replyBody },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.replyBody = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pull-right" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.createReply(comment.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Reply")]
+                        )
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(comment.replies.data, function(reply) {
+                  return _c(
+                    "div",
+                    {
+                      key: reply.id,
+                      staticClass: "media",
+                      staticStyle: { "margin-bottom": "15px" }
+                    },
+                    [
+                      _c("div", { staticClass: "media-left" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/channel/" + reply.channel.data.slug
+                            }
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "media-object",
+                              staticStyle: { "margin-right": "5px" },
+                              attrs: {
+                                width: "40",
+                                height: "40",
+                                src: reply.channel.data.image,
+                                alt: reply.channel.data.name + " image"
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "media-body" }, [
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "/channel/" + reply.channel.data.slug
+                            }
+                          },
+                          [_vm._v(_vm._s(reply.channel.data.name))]
+                        ),
+                        _vm._v(
+                          " " +
+                            _vm._s(reply.created_at_human) +
+                            "\n                        "
+                        ),
+                        _c("p", { staticStyle: { "margin-bottom": "0" } }, [
+                          _vm._v(_vm._s(reply.body))
+                        ]),
+                        _vm._v(" "),
+                        _c("ul", { staticClass: "list-inline" }, [
+                          _c("li", [
+                            _vm.$root.user.id === reply.user_id
+                              ? _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteComment(reply.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                )
+                              : _vm._e()
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                })
+              ],
+              2
+            )
+          ]
+        )
       }),
       0
     )
@@ -73913,7 +74133,7 @@ var render = function() {
       isMuted: false,
       src: [_vm.videoUrl],
       poster: _vm.thumbnailUrl,
-      autoplay: true,
+      autoplay: false,
       controls: true,
       loop: true,
       width: "100%"
@@ -87883,6 +88103,7 @@ Vue.component('video-upload', __webpack_require__(/*! ./components/VideoUpload.v
 Vue.component('video-player', __webpack_require__(/*! ./components/VideoPlayer.vue */ "./resources/js/components/VideoPlayer.vue")["default"]);
 Vue.component('video-voting', __webpack_require__(/*! ./components/VideoVoting.vue */ "./resources/js/components/VideoVoting.vue")["default"]);
 Vue.component('video-comments', __webpack_require__(/*! ./components/VideoComments.vue */ "./resources/js/components/VideoComments.vue")["default"]);
+Vue.component('subcribe-button', __webpack_require__(/*! ./components/SubcribeButton.vue */ "./resources/js/components/SubcribeButton.vue")["default"]);
 Vue.use(VueResource);
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content;
 
@@ -87942,6 +88163,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/SubcribeButton.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/SubcribeButton.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SubcribeButton.vue?vue&type=template&id=106ade9a& */ "./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a&");
+/* harmony import */ var _SubcribeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SubcribeButton.vue?vue&type=script&lang=js& */ "./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SubcribeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/SubcribeButton.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SubcribeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SubcribeButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubcribeButton.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SubcribeButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SubcribeButton.vue?vue&type=template&id=106ade9a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubcribeButton.vue?vue&type=template&id=106ade9a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SubcribeButton_vue_vue_type_template_id_106ade9a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

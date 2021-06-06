@@ -19,4 +19,14 @@ class ChannelPolicy
     {
         return $user->id === $channel->user_id;
     }
+
+    public function subcribe(User $user, Channel $channel)
+    {
+        return !$user->ownsChannel($channel);
+    }
+
+    public function unsubcribe(User $user, Channel $channel)
+    {
+        return $user->isSubcribedTo($channel);
+    }
 }

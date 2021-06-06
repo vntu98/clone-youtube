@@ -4,7 +4,7 @@
         :isMuted="(false)"
         :src="[videoUrl]"
         :poster="thumbnailUrl"
-        :autoplay="true"
+        :autoplay="false"
         :controls="true"
         :loop="true"
         :ref="'player'"

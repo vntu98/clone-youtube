@@ -121,4 +121,19 @@ class Video extends Model
     {
         return $this->morphMany(Comment::class, 'commentable')->whereNull('reply_id');
     }
+
+    public function scopeProcessed($query)
+    {
+        return $query->where('processed', false);
+    }
+
+    public function scopePublic($query)
+    {
+        return $query->where('visibility', 'public');
+    }
+
+    public function scopeVisible($query)
+    {
+        return $query->processed()->public();
+    }
 }

@@ -9,17 +9,21 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('/videos/{video}', 'VideoController@show');
+Route::get('videos/{video}', 'VideoController@show');
 
-Route::post('/videos/{video}/views', 'VideoViewController@create');
+Route::post('videos/{video}/views', 'VideoViewController@create');
 
-Route::get('/search', 'SearchController@index');
+Route::get('search', 'SearchController@index');
 
-Route::get('/videos/{video}/votes', 'VideoVoteController@show');
+Route::get('videos/{video}/votes', 'VideoVoteController@show');
 
-Route::get('/videos/{video}/comments', 'VideoCommentController@index');
+Route::get('videos/{video}/comments', 'VideoCommentController@index');
+
+Route::get('subcription/{channel}', 'ChannelSubcriptionController@show');
+
+Route::get('channel/{channel}', 'ChannelController@show');
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -35,7 +39,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('videos/{video}', 'VideoController@update');
     Route::post('videos/{video}/delete', 'VideoController@delete');
     Route::post('videos/{video}/comments', 'VideoCommentController@create');
+    Route::delete('videos/{video}/comments/{comment}', 'VideoCommentController@delete');
 
     Route::post('videos/{video}/votes', 'VideoVoteController@create');
     Route::delete('videos/{video}/votes', 'VideoVoteController@remove');
+
+    Route::post('subcriptions/{channel}', 'ChannelSubcriptionController@create');
+    Route::delete('subcriptions/{channel}', 'ChannelSubcriptionController@delete');
 });

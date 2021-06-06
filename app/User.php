@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Channel;
+use App\Models\Subcription;
 use App\Models\Video;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -48,5 +49,24 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Video::class, Channel::class);
     }
-    
+
+    public function subcriptions()
+    {
+        return $this->hasMany(Subcription::class);
+    }
+
+    public function subcribedChannels()
+    {
+        return $this->belongsToMany(Channel::class, 'subcriptions');
+    }
+
+    public function isSubcribedTo(Channel $channel)
+    {
+        return (bool) $this->subcriptions->where('channel_id', $channel->id)->count();
+    }
+
+    public function ownsChannel(Channel $channel)
+    {
+        return (bool) $this->channels->where('id', $channel->id)->count();
+    }
 }

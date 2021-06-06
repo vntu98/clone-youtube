@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,8 +22,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request, UserRepository $userRepository)
     {
-        return view('home');
+        $subcriptionVideos = $userRepository->videosFromSubcriptions($request->user());
+
+        return view('home', compact('subcriptionVideos'));
     }
 }

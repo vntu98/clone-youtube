@@ -39,4 +39,14 @@ class Channel extends Model
 
         return $query->where('name', 'like', $term);
     }
+
+    public function subcriptions()
+    {
+        return $this->hasMany(Subcription::class);
+    }
+
+    public function subcriptionCount()
+    {
+        return $this->subcriptions->count();
+    }
 }

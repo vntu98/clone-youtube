@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateVideoCommentRequest;
+use App\Models\Comment;
 use App\Models\Video;
 use App\Transformers\CommentTransformer;
 use Illuminate\Http\Request;
@@ -35,5 +36,14 @@ class VideoCommentController extends Controller
                 ->transformWith(new CommentTransformer)
                 ->toArray()
         );
+    }
+
+    public function delete(Video $video, Comment $comment)
+    {
+        $this->authorize('delete', $comment);
+        
+        $comment->delete();
+
+        return response()->json(null, 200);
     }
 }

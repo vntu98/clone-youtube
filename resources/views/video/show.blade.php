@@ -43,12 +43,12 @@
                     <div class="media">
                         <div class="media-left">
                             <a href="/channel/{{ $video->channel->slug }}">
-                                <img src="{{ $video->channel->getImage() }}" alt="{{ $video->channel->name }} image">
+                                <img width="45" height="45" src="{{ $video->channel->getImage() }}" alt="{{ $video->channel->name }} image">
                             </a>
                         </div>
                         <div style="margin-left: 5px" class="media-body">
                             <a href="/channel/{{ $video->channel->slug }}" class="media-heading">{{ $video->channel->name }}</a>
-                            Subcribe button
+                            <subcribe-button channel-slug="{{ $video->channel->slug }}"></subcribe-button>    
                         </div>
                     </div>
                 </div>
