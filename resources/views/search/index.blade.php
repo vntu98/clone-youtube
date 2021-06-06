@@ -14,19 +14,23 @@
                         <div class="well">
                             @foreach ($channels as $channel)
                                 <div class="media">
-                                    <div style="margin-right: 5px" class="media-left">
+                                    <div style="margin-right: 5px; margin-bottom: 10px" class="media-left">
                                         <a href="/channel/{{ $channel->slug }}">
                                             <img src="{{ $channel->getImage() }}" alt="{{ $channel->name }} image" class="media-object">
                                         </a>
                                     </div>
                                     <div class="media-body">
                                         <a href="/channel/{{ $channel->slug }}" class="meadia-heading">{{ $channel->name }}</a>
-                                        Subcription count
+                                        <ul class="list-inline">
+                                            <li>{{ $channel->subcriptionCount() }} {{ str_plural('subcriber', $channel->subcriptionCount()) }}</li>
+                                        </ul>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     @endif
+
+                    <h4>Videos</h4>
 
                     @if ($videos->count())
                         @foreach ($videos as $video)

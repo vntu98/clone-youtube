@@ -121,7 +121,7 @@ class Video extends Model
 
     public function voteFromUser($user)
     {
-        return $this->votes()->where('user_id', $user->id);
+        return $this->load('votes')->votes()->where('user_id', $user->id);
     }
 
     public function comments()

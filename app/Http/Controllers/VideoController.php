@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VideoCreateRequest;
 use App\Http\Requests\VideoUpdateRequest;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class VideoController extends Controller
         return view('video.edit', compact('video'));
     }
 
-    public function store(Request $request)
+    public function store(VideoCreateRequest $request)
     {
         $uid = uniqid(true);
 
