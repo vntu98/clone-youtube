@@ -57,6 +57,11 @@ class Video extends Model
         return $this->visibility === 'private';
     }
 
+    public function isPublic()
+    {
+        return $this->visibility === 'public';
+    }
+
     public function ownedByUser($user)
     {
         return $this->channel->user_id === $user->id;
@@ -94,7 +99,9 @@ class Video extends Model
     {
         $term = '%' . $term . '%';
 
-        return $query->where('title', 'like', $term);
+        return $query->where('title', 'like', $term)
+                    ->where('visibility', 'public')
+                    ->where('processed', false);
     }
 
     public function votes()

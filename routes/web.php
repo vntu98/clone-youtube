@@ -23,8 +23,7 @@ Route::get('videos/{video}/comments', 'VideoCommentController@index');
 
 Route::get('subcription/{channel}', 'ChannelSubcriptionController@show');
 
-Route::get('channel/{channel}', 'ChannelController@show');
-
+Route::get('channels/{channel}', 'ChannelController@show');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('channels/{channel}/edit', 'ChannelSettingsController@edit');

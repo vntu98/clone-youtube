@@ -9,6 +9,8 @@ class ChannelController extends Controller
 {
     public function show(Channel $channel)
     {
-        return view('channel.show');
+        $videos = $channel->videos()->latestFirst()->paginate(5);
+
+        return view('channel.show', compact('channel', 'videos'));
     }
 }
