@@ -32,6 +32,7 @@ class VideoCommentController extends Controller
 
         return response()->json(
             fractal()->item($comment)
+                ->parseIncludes(['channel', 'replies'])
                 ->parseIncludes(['channel'])
                 ->transformWith(new CommentTransformer)
                 ->toArray()

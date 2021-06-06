@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="media">
                         <div class="media-left">
-                            <img style="margin-right: 5px" src="{{ $channel->getImage() }}" alt="{{ $channel->name }} image" class="media-object">
+                            <img width="55" height="55" style="margin-right: 15px" src="{{ $channel->getImage() }}" alt="{{ $channel->name }} image" class="media-object">
                         </div>
                         <div class="media-body">
                             {{ $channel->name }}

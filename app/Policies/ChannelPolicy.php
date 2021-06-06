@@ -22,6 +22,10 @@ class ChannelPolicy
 
     public function subcribe(User $user, Channel $channel)
     {
+        if ($user->isSubcribedTo($channel)) {
+            return false;
+        }
+        
         return !$user->ownsChannel($channel);
     }
 

@@ -21,8 +21,8 @@
                     <a :href="'/channel/' + comment.channel.data.slug">{{ comment.channel.data.name }}</a> {{ comment.created_at_human }}
                     <p style="margin-bottom: 0;">{{ comment.body }}</p>
 
-                    <ul class="list-inline">
-                        <li style="display: inline-block; margin-right: 5px;" v-if="$root.user.authenticated">
+                    <ul class="list-inline" v-if="$root.user.authenticated">
+                        <li style="display: inline-block; margin-right: 5px;">
                             <a href="" @click.prevent="toggleReplyForm(comment.id)">{{ replyFormVisible === comment.id ? 'Cancel' : 'Reply' }}</a>
                         </li>
                         <li style="display: inline-block;">
@@ -47,7 +47,7 @@
                             <a :href="'/channel/' + reply.channel.data.slug">{{ reply.channel.data.name }}</a> {{ reply.created_at_human }}
                             <p style="margin-bottom: 0;">{{ reply.body }}</p>
 
-                            <ul class="list-inline">
+                            <ul class="list-inline" v-if="$root.user.authenticated">
                                 <li>
                                     <a href="" v-if="$root.user.id === reply.user_id" @click.prevent="deleteComment(reply.id)">Delete</a>
                                 </li>

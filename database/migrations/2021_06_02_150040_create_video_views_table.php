@@ -15,7 +15,7 @@ class CreateVideoViewsTable extends Migration
     {
         Schema::create('video_views', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('video_id');
             $table->string('ip')->nullable();
             $table->timestamps();

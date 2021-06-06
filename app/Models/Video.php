@@ -73,9 +73,9 @@ class Video extends Model
             return false;
         }
 
-        if ($user && ($user->id !== $this->channel->user_id)) {
-            return false;
-        }
+        // if ($user && ($user->id !== $this->channel->user_id)) {
+        //     return false;
+        // }
 
         return true;
     }
